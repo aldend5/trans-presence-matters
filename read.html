@@ -1,23 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Learn</title>
+<title>Voices</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
 
 <style>
 body {
+  margin: 0;
   font-family: 'Inter', sans-serif;
-  background: #fff;
-  padding: 40px;
-  text-align: center;
+  background: #fafafa;
 }
 
-.card {
-  max-width: 600px;
-  margin: 20px auto;
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  padding: 15px;
+  background: white;
+  border-bottom: 1px solid #eee;
+}
+
+.container {
+  max-width: 700px;
+  margin: 60px auto;
   padding: 20px;
-  background: #f5f5f5;
+}
+
+.entry {
+  background: white;
+  padding: 20px;
+  margin: 20px 0;
   border-radius: 10px;
 }
 </style>
@@ -25,17 +40,45 @@ body {
 
 <body>
 
-<h2>Learn</h2>
-
-<div class="card">
-  <h3>Beyond Binary</h3>
-  <p>Gender exists beyond just male and female.</p>
+<div class="nav">
+  <a href="index.html">Home</a>
+  <a href="read.html">Voices</a>
+  <a href="learn.html">Learn</a>
+  <a href="submit.html">Add</a>
+  <a href="about.html">About</a>
 </div>
 
-<div class="card">
-  <h3>Lived Experience</h3>
-  <p>Policies affect real lives. Listening matters.</p>
+<div class="container">
+
+<h2>Voices</h2>
+
+<p>
+These are lived experiences shared by contributors.
+</p>
+
+<div id="voices"></div>
+
 </div>
+
+<script>
+const supabase = window.supabase.createClient(
+  "https://hpafnpfhlbgcreotgbzn.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwYWZucGZobGJnY3Jlb3RnYnpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NDA4ODMsImV4cCI6MjA5MDUxNjg4M30.Djb1u8uujkFSRlXA7IfUBbDnMvLMCFx083dQRqKGmsE"
+);
+
+async function loadVoices() {
+  const { data } = await supabase
+    .from("voices")
+    .select("*")
+    .eq("status", "approved");
+
+  data.forEach(v => {
+    voices.innerHTML += `<div class="entry"><p>${v.text}</p></div>`;
+  });
+}
+
+loadVoices();
+</script>
 
 </body>
 </html>
