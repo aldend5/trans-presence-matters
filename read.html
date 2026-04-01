@@ -1,70 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Voices</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<title>Learn</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
 
 <style>
 body {
   font-family: 'Inter', sans-serif;
-  background: #f8f8ff;
+  background: #fff;
   padding: 40px;
   text-align: center;
 }
 
-.entry {
-  background: white;
+.card {
+  max-width: 600px;
   margin: 20px auto;
   padding: 20px;
-  border-radius: 12px;
-  max-width: 600px;
-  transition: 0.2s;
-}
-
-.entry:hover {
-  transform: translateY(-5px);
-}
-
-.tag {
-  font-size: 12px;
-  color: #888;
+  background: #f5f5f5;
+  border-radius: 10px;
 }
 </style>
 </head>
 
 <body>
 
-<h2>Voices</h2>
-<div id="voices"></div>
+<h2>Learn</h2>
 
-<script>
-const supabase = window.supabase.createClient(
-  "https://hpafnpfhlbgcreotgbzn.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwYWZucGZobGJnY3Jlb3RnYnpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NDA4ODMsImV4cCI6MjA5MDUxNjg4M30.Djb1u8uujkFSRlXA7IfUBbDnMvLMCFx083dQRqKGmsE"
-);
+<div class="card">
+  <h3>Beyond Binary</h3>
+  <p>Gender exists beyond just male and female.</p>
+</div>
 
-async function loadVoices() {
-  const { data } = await supabase
-    .from("voices")
-    .select("*")
-    .eq("status", "approved")
-    .order("id", { ascending: false });
-
-  data.forEach(v => {
-    voices.innerHTML += `
-      <div class="entry">
-        <p>${v.text}</p>
-        <div class="tag">${v.tag}</div>
-      </div>
-    `;
-  });
-}
-
-loadVoices();
-</script>
+<div class="card">
+  <h3>Lived Experience</h3>
+  <p>Policies affect real lives. Listening matters.</p>
+</div>
 
 </body>
 </html>
