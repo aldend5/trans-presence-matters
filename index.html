@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Trans Presence Matters</title>
+<title>Trans  Presence  Matters</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
 
@@ -9,7 +9,7 @@
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #fce3ec, #e3f0ff, #e9ffe3);
+  background: #fafafa;
   color: #222;
 }
 
@@ -19,10 +19,8 @@ body {
   justify-content: center;
   gap: 25px;
   padding: 15px;
-  background: rgba(255,255,255,0.7);
-  backdrop-filter: blur(10px);
-  position: sticky;
-  top: 0;
+  background: white;
+  border-bottom: 1px solid #eee;
 }
 
 .nav a {
@@ -34,37 +32,22 @@ body {
   color: #ff4fa3;
 }
 
-/* MAIN */
+/* LAYOUT */
 .container {
+  max-width: 700px;
+  margin: 60px auto;
+  padding: 20px;
   text-align: center;
-  padding: 80px 20px;
-}
-
-h1 {
-  font-size: 42px;
-}
-
-.card {
-  background: white;
-  padding: 25px;
-  border-radius: 15px;
-  max-width: 600px;
-  margin: 30px auto;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
 .button {
   display: inline-block;
   margin: 10px;
   padding: 10px 18px;
-  border-radius: 25px;
+  border-radius: 20px;
   background: #ff4fa3;
   color: white;
   text-decoration: none;
-}
-
-.button:hover {
-  opacity: 0.8;
 }
 </style>
 </head>
@@ -82,18 +65,15 @@ h1 {
 <div class="container">
   <h1>TransPresenceMatters</h1>
 
-  <div class="card">
-    <p>
-      A living space for trans voices, stories, and presence.
-    </p>
+  <p>
+    In 2026, decisions were made without trans voices being meaningfully included.
+  </p>
 
-    <p>
-      Built to listen. Built to learn. Built to exist beyond binaries.
-    </p>
+  <p>
+    This space exists to document what that absence feels like — through lived experience.
+  </p>
 
-    <a class="button" href="read.html">Read Voices</a>
-    <a class="button" href="submit.html">Add Your Voice</a>
-  </div>
+  <a class="button" href="read.html">Read Voices</a>
 </div>
 
 </body>
