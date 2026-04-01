@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Add Your Voice</title>
+<title>Voices</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
@@ -10,56 +10,35 @@
 <style>
 body {
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #ffe3ec, #e3f0ff);
+  background: #f8f8ff;
   padding: 40px;
   text-align: center;
 }
 
-.card {
+.entry {
   background: white;
-  padding: 30px;
-  border-radius: 15px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 12px;
   max-width: 600px;
-  margin: auto;
+  transition: 0.2s;
 }
 
-textarea, input, select {
-  width: 100%;
-  margin: 10px 0;
-  padding: 10px;
+.entry:hover {
+  transform: translateY(-5px);
 }
 
-button {
-  background: #ff4fa3;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 20px;
+.tag {
+  font-size: 12px;
+  color: #888;
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-  <h2>Add Your Presence</h2>
-
-  <textarea id="text"></textarea>
-  <input id="name" placeholder="Name (optional)">
-
-  <select id="tag">
-    <option>Identity</option>
-    <option>Family</option>
-    <option>Healthcare</option>
-    <option>Work</option>
-    <option>Safety</option>
-    <option>Affirmation</option>
-  </select>
-
-  <button onclick="submitVoice()">Submit</button>
-
-  <p id="status"></p>
-</div>
+<h2>Voices</h2>
+<div id="voices"></div>
 
 <script>
 const supabase = window.supabase.createClient(
@@ -67,16 +46,24 @@ const supabase = window.supabase.createClient(
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwYWZucGZobGJnY3Jlb3RnYnpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NDA4ODMsImV4cCI6MjA5MDUxNjg4M30.Djb1u8uujkFSRlXA7IfUBbDnMvLMCFx083dQRqKGmsE"
 );
 
-async function submitVoice() {
-  const { error } = await supabase.from("voices").insert([{
-    text: text.value,
-    name: name.value,
-    tag: tag.value,
-    status: "pending"
-  }]);
+async function loadVoices() {
+  const { data } = await supabase
+    .from("voices")
+    .select("*")
+    .eq("status", "approved")
+    .order("id", { ascending: false });
 
-  status.innerText = error ? error.message : "Submitted!";
+  data.forEach(v => {
+    voices.innerHTML += `
+      <div class="entry">
+        <p>${v.text}</p>
+        <div class="tag">${v.tag}</div>
+      </div>
+    `;
+  });
 }
+
+loadVoices();
 </script>
 
 </body>
