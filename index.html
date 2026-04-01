@@ -1,119 +1,100 @@
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<!DOCTYPE html>
+<html>
+<head>
+<title>TransPresenceMatters</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
-  background: #fafafa;
-  color: #111;
+  background: linear-gradient(135deg, #fce3ec, #e3f0ff, #e9ffe3);
+  color: #222;
 }
 
 /* NAV */
 .nav {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background: white;
-  border-bottom: 1px solid #eee;
   display: flex;
   justify-content: center;
-  gap: 30px;
+  gap: 25px;
   padding: 15px;
-  z-index: 1000;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
 }
 
 .nav a {
   text-decoration: none;
-  color: #333;
-  transition: 0.2s;
+  color: #444;
 }
 
 .nav a:hover {
-  color: red;
+  color: #ff4fa3;
 }
 
 /* MAIN */
 .container {
-  max-width: 700px;
-  margin: 100px auto;
-  padding: 20px;
   text-align: center;
+  padding: 80px 20px;
 }
 
-/* PANELS */
+h1 {
+  font-size: 42px;
+}
+
 .card {
   background: white;
-  padding: 20px;
-  margin: 20px 0;
-  border-radius: 10px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-  transition: 0.2s;
-  text-align: left;
+  padding: 25px;
+  border-radius: 15px;
+  max-width: 600px;
+  margin: 30px auto;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
-.card:hover {
-  transform: translateY(-3px);
+.button {
+  display: inline-block;
+  margin: 10px;
+  padding: 10px 18px;
+  border-radius: 25px;
+  background: #ff4fa3;
+  color: white;
+  text-decoration: none;
 }
 
-/* BUTTON */
-.btn {
-  padding: 8px 14px;
-  border: 1px solid #ddd;
-  cursor: pointer;
-  background: white;
-  margin: 5px;
+.button:hover {
+  opacity: 0.8;
 }
+</style>
+</head>
 
-.btn:hover {
-  border-color: red;
-  color: red;
-}
+<body>
 
-/* TAG */
-.tag {
-  font-size: 12px;
-  background: #eee;
-  padding: 4px 8px;
-  margin-right: 5px;
-  border-radius: 5px;
-}
-
-/* REPLY */
-.reply {
-  margin-top: 10px;
-  padding-left: 10px;
-  border-left: 2px solid #eee;
-  font-size: 14px;
-}
-</style
-  
-  <div class="container">
-  <h1>TransPresenceMatters</h1>
-
-  <p>
-    A living space built in response to silence.
-  </p>
-
-  <p>
-    Read lived experiences. Understand beyond binaries. Witness presence.
-  </p>
-
-  <a class="btn" href="read.html">Read Voices</a>
-  <a class="btn" href="submit.html">Add Your Presence</a>
+<div class="nav">
+  <a href="index.html">Home</a>
+  <a href="read.html">Voices</a>
+  <a href="learn.html">Learn</a>
+  <a href="submit.html">Add</a>
+  <a href="about.html">About</a>
 </div>
 
-  <div class="container">
+<div class="container">
   <h1>TransPresenceMatters</h1>
 
-  <p>
-    A living space built in response to silence.
-  </p>
+  <div class="card">
+    <p>
+      A living space for trans voices, stories, and presence.
+    </p>
 
-  <p>
-    Read lived experiences. Understand beyond binaries. Witness presence.
-  </p>
+    <p>
+      Built to listen. Built to learn. Built to exist beyond binaries.
+    </p>
 
-  <a class="btn" href="read.html">Read Voices</a>
-  <a class="btn" href="submit.html">Add Your Presence</a>
+    <a class="button" href="read.html">Read Voices</a>
+    <a class="button" href="submit.html">Add Your Voice</a>
+  </div>
 </div>
-  >
+
+</body>
+</html>
