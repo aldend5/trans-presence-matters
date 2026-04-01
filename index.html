@@ -1,97 +1,119 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Trans  Presence  Matters</title>
-  <style>
-    body {
-      margin: 0;
-      background: #f4f4f4;
-      color: #111;
-      font-family: "Arial Black", Impact, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
-    .container {
-      max-width: 700px;
-      padding: 20px;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #fafafa;
+  color: #111;
+}
 
-    h1 {
-      font-size: 52px;
-      letter-spacing: 2px;
-      margin-bottom: 20px;
-    }
+/* NAV */
+.nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: white;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 15px;
+  z-index: 1000;
+}
 
-    .line {
-      width: 80px;
-      height: 4px;
-      background: red;
-      margin: 20px auto;
-    }
+.nav a {
+  text-decoration: none;
+  color: #333;
+  transition: 0.2s;
+}
 
-    p {
-      font-family: "Courier New", monospace;
-      color: #333;
-      line-height: 1.6;
-    }
+.nav a:hover {
+  color: red;
+}
 
-    .nav {
-      margin-top: 40px;
-    }
+/* MAIN */
+.container {
+  max-width: 700px;
+  margin: 100px auto;
+  padding: 20px;
+  text-align: center;
+}
 
-    a {
-      display: block;
-      margin: 15px auto;
-      width: 220px;
-      padding: 12px;
-      text-decoration: none;
-      color: black;
-      border: 2px solid black;
-      transition: 0.2s;
-    }
+/* PANELS */
+.card {
+  background: white;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+  transition: 0.2s;
+  text-align: left;
+}
 
-    a:hover {
-      background: black;
-      color: white;
-      border-color: red;
-    }
+.card:hover {
+  transform: translateY(-3px);
+}
 
-    .stamp {
-      margin-top: 40px;
-      font-size: 12px;
-      letter-spacing: 2px;
-      color: red;
-    }
-  </style>
-</head>
+/* BUTTON */
+.btn {
+  padding: 8px 14px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  background: white;
+  margin: 5px;
+}
 
-<body>
+.btn:hover {
+  border-color: red;
+  color: red;
+}
 
-<div class="container">
-  <h1>TRANSPRESENCE<br>MATTERS</h1>
+/* TAG */
+.tag {
+  font-size: 12px;
+  background: #eee;
+  padding: 4px 8px;
+  margin-right: 5px;
+  border-radius: 5px;
+}
 
-  <div class="line"></div>
+/* REPLY */
+.reply {
+  margin-top: 10px;
+  padding-left: 10px;
+  border-left: 2px solid #eee;
+  font-size: 14px;
+}
+</style
+  
+  <div class="container">
+  <h1>TransPresenceMatters</h1>
 
   <p>
-    A living archive of presence.<br>
-    Built in response to silence.<br>
-    Read. Witness. Understand.
+    A living space built in response to silence.
   </p>
 
-  <div class="nav">
-    <a href="submit.html">ADD YOUR PRESENCE</a>
-    <a href="read.html">READ VOICES</a>
-    <a href="about.html">ABOUT</a>
-  </div>
+  <p>
+    Read lived experiences. Understand beyond binaries. Witness presence.
+  </p>
 
-  <div class="stamp">
-    NO PRESENCE = NO JUSTICE
-  </div>
+  <a class="btn" href="read.html">Read Voices</a>
+  <a class="btn" href="submit.html">Add Your Presence</a>
 </div>
 
-</body>
-</html>
+  <div class="container">
+  <h1>TransPresenceMatters</h1>
+
+  <p>
+    A living space built in response to silence.
+  </p>
+
+  <p>
+    Read lived experiences. Understand beyond binaries. Witness presence.
+  </p>
+
+  <a class="btn" href="read.html">Read Voices</a>
+  <a class="btn" href="submit.html">Add Your Presence</a>
+</div>
+  >
