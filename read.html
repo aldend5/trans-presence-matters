@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Read Voices</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+  <style>
+    body {
+      font-family: "Courier New", monospace;
+      background: #f5f5f5;
+      color: #111;
+      padding: 40px;
+    }
+    .entry {
+      border-left: 4px solid red;
+      padding: 15px;
+      margin-bottom: 20px;
+      background: white;
+    }
+    .meta {
+      font-size: 12px;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2>Trans Voices</h2>
+
+<div id="voices"></div>
+
+<script>
+const supabase = window.supabase.createClient(
+  "https://hpafnpfhlbgcreotgbzn.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwYWZucGZobGJnY3Jlb3RnYnpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NDA4ODMsImV4cCI6MjA5MDUxNjg4M30.Djb1u8uujkFSRlXA7IfUBbDnMvLMCFx083dQRqKGmsE"
+);
+
+async function loadVoices() {
+  const { data } = await supabase
+    .from("voices")
+    .select("*")
+    .eq("status", "approved")
+    .order("id", { ascending: false });
+
+  const container = document.getElementById("voices");
+
+  data.forEach(v => {
+    container.innerHTML += `
+      <div class="entry">
+        <p>${v.text}</p>
+        <div class="meta">— ${v.name || "anonymous"} | ${v.tag || ""}</div>
+      </div>
+    `;
+  });
+}
+
+loadVoices();
+</script>
+
+</body>
+</html>

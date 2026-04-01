@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Your Presence</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+  <style>
+    body {
+      font-family: "Courier New", monospace;
+      background: #111;
+      color: #f5f5f5;
+      padding: 40px;
+    }
+    textarea, input {
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      background: #222;
+      color: white;
+      border: 1px solid red;
+    }
+    button {
+      background: black;
+      color: white;
+      border: 2px solid red;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: red;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2>Add Your Presence</h2>
+
+<textarea id="text" placeholder="What does presence mean to you?"></textarea>
+<input id="name" placeholder="Name (optional)">
+<input id="tag" placeholder="Tag (identity, emotion, theme)">
+
+<button onclick="submitVoice()">Submit</button>
+
+<p id="status"></p>
+
+<script>
+const supabase = window.supabase.createClient(
+  "https://hpafnpfhlbgcreotgbzn.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwYWZucGZobGJnY3Jlb3RnYnpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NDA4ODMsImV4cCI6MjA5MDUxNjg4M30.Djb1u8uujkFSRlXA7IfUBbDnMvLMCFx083dQRqKGmsE"
+);
+
+async function submitVoice() {
+  const text = document.getElementById("text").value;
+  const name = document.getElementById("name").value;
+  const tag = document.getElementById("tag").value;
+
+  const { error } = await supabase
+    .from("voices")
+    .insert([{ text, name, tag, status: "pending" }]);
+
+  document.getElementById("status").innerText =
+    error ? error.message : "Submitted for review.";
+}
+</script>
+
+</body>
+</html>
