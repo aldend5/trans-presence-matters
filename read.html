@@ -1,50 +1,98 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Read Voices</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      background: #f4f4f4;
-      font-family: "Courier New", monospace;
-      text-align: center;
-      padding: 40px;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #fafafa;
+  color: #111;
+}
 
-    .entry {
-      background: white;
-      border: 2px solid black;
-      margin: 20px auto;
-      padding: 20px;
-      max-width: 600px;
-      position: relative;
-    }
+/* NAV */
+.nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: white;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 15px;
+  z-index: 1000;
+}
 
-    .entry::before {
-      content: "";
-      position: absolute;
-      top: -5px;
-      left: -5px;
-      width: 100%;
-      height: 100%;
-      border: 2px solid red;
-      z-index: -1;
-    }
+.nav a {
+  text-decoration: none;
+  color: #333;
+  transition: 0.2s;
+}
 
-    .meta {
-      margin-top: 10px;
-      font-size: 12px;
-      color: #555;
-    }
-  </style>
-</head>
+.nav a:hover {
+  color: red;
+}
 
-<body>
+/* MAIN */
+.container {
+  max-width: 700px;
+  margin: 100px auto;
+  padding: 20px;
+  text-align: center;
+}
 
-<h2>VOICES</h2>
+/* PANELS */
+.card {
+  background: white;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+  transition: 0.2s;
+  text-align: left;
+}
 
-<div id="voices"></div>
+.card:hover {
+  transform: translateY(-3px);
+}
+
+/* BUTTON */
+.btn {
+  padding: 8px 14px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  background: white;
+  margin: 5px;
+}
+
+.btn:hover {
+  border-color: red;
+  color: red;
+}
+
+/* TAG */
+.tag {
+  font-size: 12px;
+  background: #eee;
+  padding: 4px 8px;
+  margin-right: 5px;
+  border-radius: 5px;
+}
+
+/* REPLY */
+.reply {
+  margin-top: 10px;
+  padding-left: 10px;
+  border-left: 2px solid #eee;
+  font-size: 14px;
+}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<div class="container">
+  <h2>Voices</h2>
+  <div id="voices"></div>
+</div>
 
 <script>
 const supabase = window.supabase.createClient(
@@ -63,16 +111,44 @@ async function loadVoices() {
 
   data.forEach(v => {
     container.innerHTML += `
-      <div class="entry">
+      <div class="card">
         <p>${v.text}</p>
-        <div class="meta">— ${v.name || "anonymous"} | ${v.tag || ""}</div>
+
+        <span class="tag">${v.tag}</span>
+
+        <div>
+          <button class="btn" onclick="react(${v.id}, 'likes')">👍 ${v.likes}</button>
+          <button class="btn" onclick="react(${v.id}, 'dislikes')">👎 ${v.dislikes}</button>
+        </div>
+
+        <div class="reply">
+          <input placeholder="Reply..." onkeydown="if(event.key==='Enter') addReply(${v.id}, this.value)">
+        </div>
       </div>
     `;
   });
 }
 
+async function react(id, field) {
+  const { data } = await supabase.from("voices").select(field).eq("id", id).single();
+  await supabase.from("voices").update({
+    [field]: data[field] + 1
+  }).eq("id", id);
+
+  location.reload();
+}
+
+function addReply(id, text) {
+  alert("Replies stored locally for now (next step we wire DB)");
+}
+
 loadVoices();
 </script>
 
-</body>
-</html>
+<div class="nav">
+  <a href="index.html">Home</a>
+  <a href="read.html">Voices</a>
+  <a href="learn.html">Learn</a>
+  <a href="submit.html">Add</a>
+  <a href="about.html">About</a>
+</div>
