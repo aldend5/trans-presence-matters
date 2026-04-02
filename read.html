@@ -8,32 +8,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
 
 <style>
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background: #fafafa;
-}
+body { margin:0; font-family:'Inter', sans-serif; background:#fafafa; }
 
 .nav {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-  padding: 15px;
-  background: white;
-  border-bottom: 1px solid #eee;
+  display:flex; justify-content:center; gap:25px;
+  padding:15px; background:white;
 }
 
-.container {
-  max-width: 700px;
-  margin: 60px auto;
-  padding: 20px;
-}
+.container { max-width:700px; margin:60px auto; padding:20px; }
 
-.entry {
-  background: white;
-  padding: 20px;
-  margin: 20px 0;
-  border-radius: 10px;
+.card {
+  background:white;
+  padding:20px;
+  margin:20px 0;
+  border-radius:12px;
 }
 </style>
 </head>
@@ -52,9 +40,7 @@ body {
 
 <h2>Voices</h2>
 
-<p>
-These are lived experiences shared by contributors.
-</p>
+<p>Real experiences shared by contributors.</p>
 
 <div id="voices"></div>
 
@@ -73,7 +59,7 @@ async function loadVoices() {
     .eq("status", "approved");
 
   data.forEach(v => {
-    voices.innerHTML += `<div class="entry"><p>${v.text}</p></div>`;
+    voices.innerHTML += <div class="card"><p>${v.text}</p></div>;
   });
 }
 
