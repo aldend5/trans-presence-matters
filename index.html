@@ -11,69 +11,48 @@
       font-family: Arial, Helvetica, sans-serif;
       background-color: #0a0a0a;
       color: #f5f5f5;
-      line-height: 1.6;
-      overflow-x: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 20px;
     }
 
     .container {
-      max-width: 800px;
-      margin: auto;
-      padding: 60px 20px;
+      max-width: 700px;
+      text-align: left;
     }
 
     h1 {
-      font-size: 2.5rem;
-      margin-bottom: 40px;
+      font-size: 2.2rem;
+      margin-bottom: 30px;
       letter-spacing: 1px;
     }
 
     p {
       font-size: 1.05rem;
-      margin-bottom: 24px;
+      margin: 12px 0;
       opacity: 0.9;
     }
 
-    .line {
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 1s ease forwards;
-    }
-
-    .line:nth-child(2) { animation-delay: 0.5s; }
-    .line:nth-child(3) { animation-delay: 1s; }
-    .line:nth-child(4) { animation-delay: 1.5s; }
-    .line:nth-child(5) { animation-delay: 2s; }
-    .line:nth-child(6) { animation-delay: 2.5s; }
-    .line:nth-child(7) { animation-delay: 3s; }
-    .line:nth-child(8) { animation-delay: 3.5s; }
-
-    @keyframes fadeUp {
-      to {
-        opacity: 0.9;
-        transform: translateY(0);
-      }
-    }
-
-    .divider {
-      margin: 60px 0;
-      height: 1px;
-      background: rgba(255,255,255,0.1);
+    .subtle {
+      opacity: 0.6;
+      font-size: 0.9rem;
+      margin-top: 20px;
     }
 
     .cta {
-      margin-top: 40px;
-      font-size: 1.1rem;
-      opacity: 0.95;
+      margin-top: 30px;
     }
 
     a.button {
       display: inline-block;
-      margin-top: 20px;
-      padding: 12px 20px;
+      padding: 10px 18px;
       border: 1px solid #f5f5f5;
       text-decoration: none;
       color: #f5f5f5;
       transition: all 0.3s ease;
+      font-size: 0.95rem;
     }
 
     a.button:hover {
@@ -81,10 +60,18 @@
       color: #0a0a0a;
     }
 
-    footer {
-      margin-top: 80px;
-      font-size: 0.85rem;
-      opacity: 0.6;
+    .fade {
+      opacity: 0;
+      animation: fadeIn 1.2s ease forwards;
+    }
+
+    .fade:nth-child(2) { animation-delay: 0.3s; }
+    .fade:nth-child(3) { animation-delay: 0.6s; }
+    .fade:nth-child(4) { animation-delay: 0.9s; }
+    .fade:nth-child(5) { animation-delay: 1.2s; }
+
+    @keyframes fadeIn {
+      to { opacity: 0.9; }
     }
   </style>
 </head>
@@ -93,88 +80,36 @@
 
   <div class="container">
     
-    <h1>Trans Presence Matters</h1>
+    <h1 class="fade">Trans Presence Matters</h1>
 
-    <p class="line">Trans presence is not new.</p>
-
-    <p class="line">What changes is how often it is seen, heard, or understood.</p>
-
-    <div class="divider"></div>
-
-    <p class="line">
-      There are shifts happening — in language, in policy, in the ways lives are being defined from the outside.
+    <p class="fade">
+      Trans presence is not new. This is where it becomes more visible.
     </p>
 
-    <p class="line">
-      The impact of those shifts is not always visible where decisions are made.
+    <p class="fade">
+      Things are shifting — in language, in policy, in everyday life.  
+      What is felt is not always what is understood.
     </p>
 
-    <p class="line">
-      But it is felt — quietly, constantly, and in ways that don’t translate easily.
+    <p class="fade">
+      This space exists to listen, to hold, and to slowly understand how and why that gap exists.
     </p>
 
-    <div class="divider"></div>
-
-    <p class="line">
-      This space exists to pay attention to that.
+    <p class="fade">
+      If you are part of the trans community, this is a place to speak — in your own terms, at your own pace.
     </p>
 
-    <p class="line">
-      To make room for what is being experienced — not summarised.
+    <p class="fade">
+      If you are here to listen, stay with it. Read without turning experience into takeaway.
     </p>
 
-    <p class="line">
-      To understand, over time, how and why things are affecting real lives.
-    </p>
-
-    <div class="divider"></div>
-
-    <p class="line">
-      If you are part of the trans community,
-      this space is yours to shape.
-    </p>
-
-    <p class="line">
-      Not to perform clarity.
-      Not to simplify yourself.
-      Not to make it easier for others.
-    </p>
-
-    <p class="line">
-      Just to express what is true — as it is being lived.
-    </p>
-
-    <div class="divider"></div>
-
-    <p class="line">
-      If you are here to listen,
-      stay with what is uncomfortable.
-    </p>
-
-    <p class="line">
-      Read without turning experience into takeaway.
-    </p>
-
-    <p class="line">
-      Learn without needing to resolve everything immediately.
-    </p>
-
-    <div class="divider"></div>
-
-    <p class="line">
-      This space is held with care, and shaped by those who choose to speak within it.
-    </p>
-
-    <div class="cta line">
-      Speak if you want to.<br>
-      Or read until you realise you have to.
-      <br><br>
+    <div class="cta fade">
       <a href="/submit.html" class="button">Enter the space</a>
     </div>
 
-    <footer>
-      An evolving archive of presence.
-    </footer>
+    <div class="subtle fade">
+      This space is held by an ally, and shaped by those who choose to speak within it.
+    </div>
 
   </div>
 
