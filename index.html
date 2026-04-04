@@ -1,121 +1,180 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Trans Presence Matters</title>
+  <meta charset="UTF-8">
+  <title>Trans Presence Matters</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #0a0a0a;
+      color: #f5f5f5;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
 
-<style>
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background: linear-gradient(120deg, #fce3ec, #e3f0ff, #e9ffe3);
-  color: #222;
-}
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 60px 20px;
+    }
 
-/* NAV */
-.nav {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-  padding: 15px;
-  background: rgba(255,255,255,0.7);
-  backdrop-filter: blur(10px);
-}
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 40px;
+      letter-spacing: 1px;
+    }
 
-.nav a {
-  text-decoration: none;
-  color: #444;
-}
+    p {
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+      opacity: 0.9;
+    }
 
-.nav a:hover {
-  color: #ff4fa3;
-}
+    .line {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1s ease forwards;
+    }
 
-/* LAYOUT */
-.container {
-  max-width: 700px;
-  margin: 80px auto;
-  text-align: center;
-  padding: 20px;
-}
+    .line:nth-child(2) { animation-delay: 0.5s; }
+    .line:nth-child(3) { animation-delay: 1s; }
+    .line:nth-child(4) { animation-delay: 1.5s; }
+    .line:nth-child(5) { animation-delay: 2s; }
+    .line:nth-child(6) { animation-delay: 2.5s; }
+    .line:nth-child(7) { animation-delay: 3s; }
+    .line:nth-child(8) { animation-delay: 3.5s; }
 
-.card {
-  background: white;
-  padding: 25px;
-  border-radius: 15px;
-  margin-top: 20px;
-}
+    @keyframes fadeUp {
+      to {
+        opacity: 0.9;
+        transform: translateY(0);
+      }
+    }
 
-.button {
-  display: inline-block;
-  margin: 10px;
-  padding: 10px 18px;
-  border-radius: 20px;
-  background: #ff4fa3;
-  color: white;
-  text-decoration: none;
-}
-</style>
+    .divider {
+      margin: 60px 0;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .cta {
+      margin-top: 40px;
+      font-size: 1.1rem;
+      opacity: 0.95;
+    }
+
+    a.button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 20px;
+      border: 1px solid #f5f5f5;
+      text-decoration: none;
+      color: #f5f5f5;
+      transition: all 0.3s ease;
+    }
+
+    a.button:hover {
+      background-color: #f5f5f5;
+      color: #0a0a0a;
+    }
+
+    footer {
+      margin-top: 80px;
+      font-size: 0.85rem;
+      opacity: 0.6;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="nav">
-  <a href="index.html">Home</a>
-  <a href="read.html">Voices</a>
-  <a href="learn.html">Learn</a>
-  <a href="submit.html">Add</a>
-  <a href="about.html">About</a>
-</div>
+  <div class="container">
+    
+    <h1>Trans Presence Matters</h1>
 
-<div class="container">
+    <p class="line">We are already here.</p>
 
-  <h1>Trans Presence Matters</h1>
+    <p class="line">Not newly. Not suddenly.</p>
 
-  <div class="card" style="text-align:left; line-height:1.8; font-size:16px;">
+    <p class="line">Just more visibly. More vulnerably.</p>
 
-    <p><strong>This space exists because silence was chosen.</strong></p>
+    <div class="divider"></div>
 
-    <p>
-      Decisions were made about trans lives without trans people in the room.
-      Not as an oversight, not as a mistake—but as a pattern.
+    <p class="line">
+      There are changes unfolding — in language, in policy, in how lives are being defined from the outside.
     </p>
 
-    <p>
-      And when that happens, what gets erased isn’t just representation.
-      It’s reality. It’s daily life. It’s the quiet, constant negotiations
-      people are forced to make just to exist.
+    <p class="line">
+      But what is being felt does not always survive how it is written.
     </p>
 
-    <p><strong>So this isn’t a campaign.</strong><br>
-    It’s not a debate stage either.</p>
-
-    <p>
-      It’s a place where people can speak,
-      and where others are expected to listen.
+    <p class="line">
+      And what is written does not always reflect how it lands.
     </p>
 
-    <p>
-      Because awareness doesn’t come from policies written in isolation.
-      It comes from voices that refuse to stay invisible.
-      It comes from stories that don’t fit into neat binaries,
-      or comfortable narratives.
+    <div class="divider"></div>
+
+    <p class="line">
+      This space exists to hold that difference.
     </p>
 
-    <p>
-      If you’re here to understand, start by reading.<br>
-      If you’ve lived it, and you’re tired of being spoken over—this space is yours too.
+    <p class="line">
+      To make room for what is being experienced — not summarised.
     </p>
 
-    <p><strong>Nothing changes until something is said.</strong></p>
+    <p class="line">
+      To understand, slowly and honestly, how and why things are affecting real lives.
+    </p>
+
+    <div class="divider"></div>
+
+    <p class="line">
+      If you are part of the trans community,
+      this is a place to speak in your own terms.
+    </p>
+
+    <p class="line">
+      Not to perform clarity.
+      Not to simplify yourself.
+      Not to make it easier for others.
+    </p>
+
+    <p class="line">
+      Just to say what is true — as it is being lived.
+    </p>
+
+    <div class="divider"></div>
+
+    <p class="line">
+      If you are here to listen,
+      stay with what is uncomfortable.
+    </p>
+
+    <p class="line">
+      Read without turning experience into takeaway.
+    </p>
+
+    <p class="line">
+      Learn without needing to conclude.
+    </p>
+
+    <div class="divider"></div>
+
+    <div class="cta line">
+      Speak if you want to.<br>
+      Or read until you realise you have to.
+      <br><br>
+      <a href="/submit.html" class="button">Enter the space</a>
+    </div>
+
+    <footer>
+      This is an evolving archive of presence.
+    </footer>
 
   </div>
-
-  <a class="button" href="read.html">Read Voices</a>
-  <a class="button" href="submit.html">Add Your Presence</a>
-
-</div>
 
 </body>
 </html>
