@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,69 +10,67 @@
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background-color: #0a0a0a;
-      color: #f5f5f5;
+      height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      padding: 20px;
+      background: linear-gradient(
+        135deg,
+        #5BCEFA 0%,
+        #F5A9B8 35%,
+        #FFFFFF 50%,
+        #F5A9B8 65%,
+        #5BCEFA 100%
+      );
+      color: #111;
     }
 
     .container {
       max-width: 700px;
-      text-align: left;
+      padding: 40px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 20px;
     }
 
     h1 {
-      font-size: 2.2rem;
-      margin-bottom: 30px;
+      font-size: 2.4rem;
+      margin-bottom: 20px;
       letter-spacing: 1px;
     }
 
     p {
       font-size: 1.05rem;
       margin: 12px 0;
-      opacity: 0.9;
+      line-height: 1.5;
     }
 
     .subtle {
-      opacity: 0.6;
       font-size: 0.9rem;
+      opacity: 0.7;
       margin-top: 20px;
     }
 
     .cta {
-      margin-top: 30px;
+      margin-top: 25px;
+      font-size: 1.05rem;
     }
 
     a.button {
       display: inline-block;
+      margin-top: 15px;
       padding: 10px 18px;
-      border: 1px solid #f5f5f5;
+      border: 1px solid #111;
       text-decoration: none;
-      color: #f5f5f5;
-      transition: all 0.3s ease;
-      font-size: 0.95rem;
+      color: #111;
+      transition: all 0.25s ease;
+      border-radius: 6px;
     }
 
     a.button:hover {
-      background-color: #f5f5f5;
-      color: #0a0a0a;
-    }
-
-    .fade {
-      opacity: 0;
-      animation: fadeIn 1.2s ease forwards;
-    }
-
-    .fade:nth-child(2) { animation-delay: 0.3s; }
-    .fade:nth-child(3) { animation-delay: 0.6s; }
-    .fade:nth-child(4) { animation-delay: 0.9s; }
-    .fade:nth-child(5) { animation-delay: 1.2s; }
-
-    @keyframes fadeIn {
-      to { opacity: 0.9; }
+      background: #111;
+      color: #fff;
     }
   </style>
 </head>
@@ -80,36 +79,44 @@
 
   <div class="container">
     
-    <h1 class="fade">Trans Presence Matters</h1>
+    <h1>Trans Presence Matters</h1>
 
-    <p class="fade">
-      Trans presence is not new. This is where it becomes more visible.
+    <p><strong>Trans presence is not new.</strong><br>
+    This is a space where it becomes more visible, more heard, more understood.</p>
+
+    <p>
+      There are shifts happening that are being felt deeply —<br>
+      not always reflected in how they are written or spoken about.
     </p>
 
-    <p class="fade">
-      Things are shifting — in language, in policy, in everyday life.  
-      What is felt is not always what is understood.
+    <p>
+      This space exists to stay with that reality.<br>
+      To understand, slowly and honestly, how and why it is being lived.
     </p>
 
-    <p class="fade">
-      This space exists to listen, to hold, and to slowly understand how and why that gap exists.
+    <p>
+      If you are part of the trans community,<br>
+      you can share what is true — in your own words, on your own terms.
     </p>
 
-    <p class="fade">
-      If you are part of the trans community, this is a place to speak — in your own terms, at your own pace.
+    <p>
+      If you are here to listen,<br>
+      read with care. Stay with what you don’t immediately understand.
     </p>
 
-    <p class="fade">
-      If you are here to listen, stay with it. Read without turning experience into takeaway.
-    </p>
-
-    <div class="cta fade">
-      <a href="/submit.html" class="button">Enter the space</a>
+    <div class="cta">
+      Speak if you want to.<br>
+      Or read until you realise you have to.
+      <br>
+      <a href="/submit.html" class="button">Enter</a>
     </div>
 
-  
+    <div class="subtle">
+      This space is held by an ally, and shaped by those who choose to speak within it.
+    </div>
 
   </div>
 
 </body>
 </html>
+```
