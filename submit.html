@@ -1,220 +1,170 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Add Your Presence</title>
+  <meta charset="UTF-8">
+  <title>Share — Trans Presence Matters</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #ffffff 0%, #f7c6d9 50%, #a8d8f0 100%);
+      color: #1a1a1a;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-<style>
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background: linear-gradient(120deg, #fce3ec, #e3f0ff, #e9ffe3);
-  color: #222;
-}
+    .container {
+      max-width: 700px;
+      width: 100%;
+      padding: 40px 20px;
+    }
 
-/* NAV */
-.nav {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-  padding: 15px;
-  background: rgba(255,255,255,0.7);
-}
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
 
-.nav a {
-  text-decoration: none;
-  color: #444;
-}
+    .intro {
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
 
-/* LAYOUT */
-.container {
-  max-width: 700px;
-  margin: 60px auto;
-  padding: 20px;
-  text-align: center;
-}
+    .subtle {
+      opacity: 0.8;
+      font-size: 0.95rem;
+      margin-bottom: 25px;
+    }
 
-.card {
-  background: white;
-  padding: 25px;
-  border-radius: 16px;
-  text-align: left;
-}
+    textarea {
+      width: 100%;
+      min-height: 180px;
+      padding: 15px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      resize: vertical;
+      outline: none;
+      font-family: inherit;
+    }
 
-/* TEXTAREA */
-textarea {
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  transition: 0.2s;
-}
+    textarea:focus {
+      border-color: #1a1a1a;
+    }
 
-textarea:focus {
-  border-color: #ff4fa3;
-  box-shadow: 0 0 10px rgba(255,79,163,0.2);
-}
+    .identity {
+      margin-top: 20px;
+      font-size: 0.95rem;
+    }
 
-/* TAGS */
-.tags {
-  margin-top: 10px;
-}
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 0.95rem;
+    }
 
-.tag {
-  display: inline-block;
-  padding: 6px 12px;
-  margin: 5px;
-  border-radius: 20px;
-  border: 1px solid #ddd;
-  cursor: pointer;
-}
+    .checkbox {
+      margin-top: 10px;
+    }
 
-.tag.active {
-  background: #ff4fa3;
-  color: white;
-}
+    .consent {
+      margin-top: 20px;
+      font-size: 0.85rem;
+      opacity: 0.7;
+      line-height: 1.5;
+    }
 
-/* BUTTON */
-.button {
-  margin-top: 15px;
-  padding: 10px 18px;
-  border-radius: 20px;
-  background: #ff4fa3;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
+    button {
+      margin-top: 25px;
+      padding: 12px 20px;
+      border: 1px solid #1a1a1a;
+      background: none;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 20px;
+      transition: all 0.25s ease;
+    }
 
-/* TEXT */
-.helper {
-  font-size: 14px;
-  color: #666;
-  margin-top: 10px;
-}
+    button:hover {
+      background: #1a1a1a;
+      color: #ffffff;
+    }
 
-.prompt {
-  font-size: 14px;
-  color: #888;
-  margin-bottom: 10px;
-}
-
-/* SUCCESS */
-.success {
-  text-align: center;
-  font-size: 18px;
-}
-</style>
+    .response {
+      margin-top: 30px;
+      font-size: 1rem;
+      opacity: 0.9;
+      display: none;
+      line-height: 1.6;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="nav">
-  <a href="index.html">Home</a>
-  <a href="read.html">Voices</a>
-  <a href="learn.html">Learn</a>
-  <a href="submit.html">Add</a>
-  <a href="about.html">About</a>
-</div>
+  <div class="container">
 
-<div class="container">
+    <h1>Say it how it exists for you.</h1>
 
-<h2>Add Your Presence</h2>
+    <div class="intro">
+      You don’t need to explain everything.<br>
+      You don’t need to make it easier to understand.<br><br>
+      Just something real enough to be felt.
+    </div>
 
-<div class="card" id="formCard">
+    <form id="submissionForm">
 
-<p class="helper">
-No login. No tracking. Say what you need to.
-</p>
+      <textarea placeholder="What has been changing for you?
+What feels different, harder, unseen, or misunderstood?
 
-<p class="prompt" id="promptText"></p>
+Write as much or as little as you need."></textarea>
 
-<textarea id="text" rows="5" placeholder="Write your experience..."></textarea>
+      <div class="identity">
+        Name (optional)
+        <input type="text" placeholder="Leave blank to stay anonymous">
+        
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" checked>
+            Stay anonymous
+          </label>
+        </div>
+      </div>
 
-<p class="helper" onclick="showHelp()" style="cursor:pointer;">
-I don’t know what to write
-</p>
+      <div class="consent">
+        Your words may be shared here to help others understand.<br>
+        Nothing will be altered beyond clarity.
+      </div>
 
-<div class="tags" id="tags">
-  <span class="tag">Identity</span>
-  <span class="tag">Family</span>
-  <span class="tag">Healthcare</span>
-  <span class="tag">Work</span>
-  <span class="tag">Safety</span>
-  <span class="tag">Joy</span>
-</div>
+      <button type="submit">Let this be seen</button>
 
-<button class="button" onclick="submitVoice()">Submit</button>
+    </form>
 
-<p id="status" class="helper"></p>
+    <div class="response" id="responseMessage">
+      Received.<br><br>
+      It will sit here, with others.<br>
+      Not to be reduced.<br>
+      Not to be rushed past.
+    </div>
 
-</div>
+  </div>
 
-</div>
+  <script>
+    const form = document.getElementById('submissionForm');
+    const response = document.getElementById('responseMessage');
 
-<script>
-const supabase = window.supabase.createClient(
-  "https://hpafnpfhlbgcreotgbzn.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwYWZucGZobGJnY3Jlb3RnYnpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NDA4ODMsImV4cCI6MjA5MDUxNjg4M30.Djb1u8uujkFSRlXA7IfUBbDnMvLMCFx083dQRqKGmsE"
-);
-
-/* PROMPTS */
-const prompts = [
-  "When did you feel unseen?",
-  "What do people misunderstand?",
-  "What changed for you recently?",
-  "What do you wish others understood?"
-];
-
-let i = 0;
-function rotatePrompt() {
-  document.getElementById("promptText").innerText = prompts[i];
-  i = (i + 1) % prompts.length;
-}
-setInterval(rotatePrompt, 4000);
-rotatePrompt();
-
-/* HELP */
-function showHelp() {
-  document.getElementById("text").value =
-    "I remember a moment when...\n\nIt made me feel...\n\nWhat I wish people understood is...";
-}
-
-/* TAG SELECT */
-let selectedTag = "";
-
-document.querySelectorAll(".tag").forEach(tag => {
-  tag.onclick = () => {
-    document.querySelectorAll(".tag").forEach(t => t.classList.remove("active"));
-    tag.classList.add("active");
-    selectedTag = tag.innerText;
-  };
-});
-
-/* SUBMIT */
-async function submitVoice() {
-  const content = document.getElementById("text").value;
-
-  if (!content) {
-    document.getElementById("status").innerText = "Write something first.";
-    return;
-  }
-
-  const { error } = await supabase.from("voices").insert([{
-    text: content,
-    tag: selectedTag,
-    status: "pending"
-  }]);
-
-  if (error) {
-    document.getElementById("status").innerText = error.message;
-  } else {
-    document.getElementById("formCard").innerHTML =
-      "<div class='success'>Your voice is now part of this space.</div>";
-  }
-}
-</script>
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      form.style.display = 'none';
+      response.style.display = 'block';
+    });
+  </script>
 
 </body>
 </html>
