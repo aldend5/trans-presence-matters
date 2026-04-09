@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Trans Presence Matters</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trans Presence Matters</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
@@ -11,7 +11,7 @@
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(180deg, #fdfbff, #f7c6d9, #a8d8f0);
+  background: linear-gradient(180deg, #fdfbff 0%, #f7c6d9 50%, #a8d8f0 100%);
   color: #1a1a1a;
 }
 
@@ -25,6 +25,7 @@ body {
   display: flex;
   gap: 20px;
   margin-bottom: 30px;
+  font-size: 0.9rem;
 }
 
 .nav a {
@@ -33,28 +34,17 @@ body {
   color: #1a1a1a;
 }
 
-.nav a:hover { opacity: 1; }
-
 .card {
   background: rgba(255,255,255,0.7);
   backdrop-filter: blur(12px);
   border-radius: 20px;
   padding: 25px;
-}
-
-.links {
-  margin-top: 25px;
-}
-
-a.cta {
-  display: inline-block;
-  margin-top: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
 }
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
 <div class="nav">
@@ -67,13 +57,14 @@ a.cta {
 <div class="card">
 <h1>Trans Presence Matters</h1>
 
-<p>This space holds what is being lived.</p>
-<p>Not everything here is meant to be explained.</p>
+<p>This space holds what is being lived, not summarised.</p>
 
-<div class="links">
-<a class="cta" href="read.html">Read what is being shared →</a><br>
-<a class="cta" href="submit.html">Add your voice →</a>
-</div>
+<p>Understanding doesn’t come from explanation alone. It comes from staying with what is shared.</p>
+
+<br>
+
+<a href="read.html">Read what is being shared →</a><br><br>
+<a href="submit.html">Add your voice →</a>
 </div>
 
 </div>
