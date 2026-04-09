@@ -81,7 +81,7 @@ async function loadPosts() {
   const { data, error } = await supabaseClient
     .from('submissions')
     .select('*')
-    .eq('status', 'pending') // change to "approved" later
+    .eq('status', 'approcved') 
     .order('created_at', { ascending: false });
 
   const container = document.getElementById('posts');
