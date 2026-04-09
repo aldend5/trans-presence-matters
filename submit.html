@@ -45,10 +45,6 @@
       font-family: inherit;
     }
 
-    textarea:focus {
-      border-color: #1a1a1a;
-    }
-
     .identity {
       margin-top: 20px;
       font-size: 0.95rem;
@@ -60,7 +56,6 @@
       margin-top: 8px;
       border: 1px solid #ccc;
       border-radius: 6px;
-      font-size: 0.95rem;
     }
 
     .checkbox {
@@ -71,7 +66,6 @@
       margin-top: 20px;
       font-size: 0.85rem;
       opacity: 0.7;
-      line-height: 1.5;
     }
 
     button {
@@ -79,22 +73,18 @@
       padding: 12px 20px;
       border: 1px solid #1a1a1a;
       background: none;
-      font-size: 1rem;
       cursor: pointer;
       border-radius: 20px;
-      transition: all 0.25s ease;
     }
 
     button:hover {
       background: #1a1a1a;
-      color: #ffffff;
+      color: #fff;
     }
 
     .response {
       margin-top: 30px;
-      font-size: 1rem;
       display: none;
-      line-height: 1.6;
     }
   </style>
 </head>
@@ -103,7 +93,7 @@
 
   <div class="container">
 
-    <h1>TEST CHANGE 123</h1>
+    <h1>Say it how it exists for you.</h1>
 
     <div class="intro">
       You don’t need to explain everything.<br>
@@ -114,13 +104,9 @@
     <form id="submissionForm">
 
       <textarea 
-        name="content" 
         id="contentField"
-        required 
-        placeholder="What has been changing for you?
-What feels different, harder, unseen, or misunderstood?
-
-Write as much or as little as you need.">
+        placeholder="What has been changing for you?"
+        required>
       </textarea>
 
       <div class="identity">
@@ -136,8 +122,7 @@ Write as much or as little as you need.">
       </div>
 
       <div class="consent">
-        Your words may be shared here to help others understand.<br>
-        Nothing will be altered beyond clarity.
+        Your words may be shared here to help others understand.
       </div>
 
       <button type="submit">Let this be seen</button>
@@ -145,10 +130,7 @@ Write as much or as little as you need.">
     </form>
 
     <div class="response" id="responseMessage">
-      Received.<br><br>
-      It will sit here, with others.<br>
-      Not to be reduced.<br>
-      Not to be rushed past.
+      Received. It will sit here, with others.
     </div>
 
   </div>
@@ -156,63 +138,24 @@ Write as much or as little as you need.">
   <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script>
-  console.log("JS LOADED"); // DEBUG
+  <script>
+    const supabaseUrl = "https://hpafnpfhlbgcreotgbzn.supabase.co";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwYWZucGZobGJnY3Jlb3RnYnpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NDA4ODMsImV4cCI6MjA5MDUxNjg4M30.Djb1u8uujkFSRlXA7IfUBbDnMvLMCFx083dQRqKGmsE";
 
-  const supabaseUrl = "https://hpafnpfhlbgcreotgbzn.supabase.co";
-  const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwYWZucGZobGJnY3Jlb3RnYnpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NDA4ODMsImV4cCI6MjA5MDUxNjg4M30.Djb1u8uujkFSRlXA7IfUBbDnMvLMCFx083dQRqKGmsE";
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-  const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+    const form = document.getElementById('submissionForm');
+    const response = document.getElementById('responseMessage');
+    const nameField = document.getElementById('nameField');
+    const contentField = document.getElementById('contentField');
+    const anonymousToggle = document.getElementById('anonymousToggle');
 
-  const form = document.getElementById('submissionForm');
-  const response = document.getElementById('responseMessage');
-  const anonymousToggle = document.getElementById('anonymousToggle');
-  const nameField = document.getElementById('nameField');
-  const contentField = document.getElementById('contentField');
+    nameField.disabled = true;
 
-  nameField.disabled = true;
-
-  anonymousToggle.addEventListener('change', () => {
-    nameField.disabled = anonymousToggle.checked;
-    if (anonymousToggle.checked) nameField.value = "";
-  });
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    console.log("FORM SUBMIT TRIGGERED"); // DEBUG
-
-    const content = contentField.value.trim();
-    const name = nameField.value.trim();
-    const anonymous = anonymousToggle.checked;
-
-    if (!content) {
-      alert("Write something first.");
-      return;
-    }
-
-    const { data, error } = await supabase
-      .from('submissions')
-      .insert([
-        {
-          content: content,
-          name: anonymous ? null : name,
-          anonymous: anonymous,
-          status: "pending"
-        }
-      ]);
-
-    console.log("RESULT:", { data, error });
-
-    if (error) {
-      alert(error.message);
-      return;
-    }
-
-    form.style.display = "none";
-    response.style.display = "block";
-  });
-</script>
+    anonymousToggle.addEventListener('change', () => {
+      nameField.disabled = anonymousToggle.checked;
+      if (anonymousToggle.checked) nameField.value = "";
+    });
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -222,32 +165,26 @@ Write as much or as little as you need.">
       const anonymous = anonymousToggle.checked;
 
       if (!content) {
-        alert("Please write something before submitting.");
+        alert("Write something first.");
         return;
       }
 
-      console.log("Submitting:", { content, name, anonymous });
-
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('submissions')
         .insert([
           {
-            content: content,
+            content,
             name: anonymous ? null : name,
-            anonymous: anonymous,
+            anonymous,
             status: "pending"
           }
         ]);
 
-      console.log("Result:", { data, error });
-
       if (error) {
-        alert("Error: " + error.message);
+        alert(error.message);
         return;
       }
 
-      form.reset();
-      nameField.disabled = true;
       form.style.display = "none";
       response.style.display = "block";
     });
