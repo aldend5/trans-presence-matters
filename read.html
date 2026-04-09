@@ -51,6 +51,7 @@ body {
 </head>
 
 <body>
+
 <div class="container">
 
 <div class="nav">
@@ -69,6 +70,7 @@ body {
 
 </div>
 
+<!-- Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
@@ -78,20 +80,24 @@ const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 async function loadPosts() {
+  console.log("LOADING POSTS...");
+
   const { data, error } = await supabaseClient
     .from('submissions')
     .select('*')
-    .eq('status', 'approcved') 
     .order('created_at', { ascending: false });
+
+  console.log("DATA:", data);
+  console.log("ERROR:", error);
 
   const container = document.getElementById('posts');
 
   if (error) {
-    container.innerHTML = "Unable to load right now.";
+    container.innerHTML = "Something went wrong loading posts.";
     return;
   }
 
-  if (!data.length) {
+  if (!data || data.length === 0) {
     container.innerHTML = "Nothing here yet.";
     return;
   }
@@ -99,7 +105,9 @@ async function loadPosts() {
   container.innerHTML = data.map(post => `
     <div class="post">
       <div>${post.content}</div>
-      <div class="name">${post.anonymous ? "Anonymous" : (post.name || "")}</div>
+      <div class="name">
+        ${post.anonymous ? "Anonymous" : (post.name || "")}
+      </div>
     </div>
   `).join('');
 }
