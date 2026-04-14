@@ -91,7 +91,7 @@ Visibility is not passive — it reshapes what is allowed to exist.
 
 <script>
 const supabaseUrl = "https://hpafnpfhlbgcreotgbzn.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwYWZucGZobGJnY3Jlb3RnYnpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NDA4ODMsImV4cCI6MjA5MDUxNjg4M30.Djb1u8uujkFSRlXA7IfUBbDnMvLMCFx083dQRqKGmsE"; // 🔴
+const supabaseKey = "YOUR_ANON_KEY";
 
 const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
@@ -99,7 +99,7 @@ async function loadPosts() {
 
   const { data: posts, error } = await supabase
     .from('submissions')
-    .select('*')
+    .select('*');
 
   const container = document.getElementById('posts');
   container.innerHTML = "";
@@ -111,21 +111,11 @@ async function loadPosts() {
   }
 
   if (!posts || posts.length === 0) {
-    container.innerHTML = "<p style='text-align:center;'>No approved posts yet.</p>";
+    container.innerHTML = "<p style='text-align:center;'>No posts yet.</p>";
     return;
   }
 
-  for (let post of posts) {
-
-    let likeCount = 0;
-
-    const { count } = await supabase
-      .from('likes')
-      .select('*', { count: 'exact', head: true })
-      .eq('submission_id', post.id);
-
-    likeCount = count || 0;
-
+  posts.reverse().forEach(post => {
     const el = document.createElement('div');
     el.className = "card";
 
@@ -134,27 +124,13 @@ async function loadPosts() {
       <div class="author">
         ${post.anonymous ? "Anonymous" : (post.name || "")}
       </div>
-
-      <div class="like-section">
-        ❤️ ${likeCount}
-        <button onclick="likePost('${post.id}')">Like</button>
-      </div>
     `;
 
     container.appendChild(el);
-  }
-}
-
-async function likePost(id) {
-  await supabase.from('likes').insert([
-    { submission_id: id }
-  ]);
-
-  loadPosts();
+  });
 }
 
 loadPosts();
 </script>
-
 </body>
 </html>
