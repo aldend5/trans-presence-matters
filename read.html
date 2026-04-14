@@ -119,15 +119,21 @@ h2 {
 <script>
 console.log("SCRIPT STARTED");
 
-const supabaseUrl = "https://hpafnpfhlbgcreotgbzn.supabase.co";
-const supabaseKey = "YOUR_KEY";
+// Prevent duplicate client creation
+if (!window._supabaseClient) {
+  const supabaseUrl = "https://hpafnpfhlbgcreotgbzn.supabase.co";
+  const supabaseKey = "YOUR_KEY_HERE";
 
-const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+  window._supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+}
+
+// Use the global client
+const db = window._supabaseClient;
 
 async function loadPosts() {
   console.log("LOADING POSTS");
 
-  const { data, error } = await supabase
+  const { data, error } = await db
     .from('submissions')
     .select('*')
     .eq('status', 'approved');
@@ -153,7 +159,9 @@ async function loadPosts() {
 
     el.innerHTML = `
       <div>${post.content}</div>
-      <div class="author">${post.anonymous ? "Anonymous" : post.name}</div>
+      <div class="author">
+        ${post.anonymous ? "Anonymous" : (post.name || "")}
+      </div>
     `;
 
     container.appendChild(el);
@@ -162,6 +170,5 @@ async function loadPosts() {
 
 loadPosts();
 </script>
-
 </body>
 </html>
