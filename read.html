@@ -100,7 +100,6 @@ async function loadPosts() {
   const { data: posts, error } = await supabase
     .from('submissions')
     .select('*')
-    .eq('status', 'approved');
 
   const container = document.getElementById('posts');
   container.innerHTML = "";
