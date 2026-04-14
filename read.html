@@ -11,7 +11,7 @@
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(180deg, #fdfbff 0%, #f7c6d9 50%, #a8d8f0 100%);
+  background: linear-gradient(180deg, #fdfbff, #f7c6d9, #a8d8f0);
 }
 
 .container {
@@ -25,21 +25,10 @@ body {
   gap: 20px;
   justify-content: center;
   margin-bottom: 40px;
-  flex-wrap: wrap;
-}
-
-.nav a {
-  text-decoration: none;
-  opacity: 0.7;
-  color: #1a1a1a;
-}
-
-.nav a:hover {
-  opacity: 1;
 }
 
 .card {
-  background: rgba(255,255,255,0.75);
+  background: rgba(255,255,255,0.8);
   border-radius: 20px;
   padding: 25px;
   margin-bottom: 20px;
@@ -49,19 +38,6 @@ body {
   opacity: 0.6;
   font-size: 0.9rem;
   margin-top: 10px;
-}
-
-.like-section {
-  margin-top: 15px;
-}
-
-button {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 10px;
-  background: #d46a9e;
-  color: white;
-  cursor: pointer;
 }
 </style>
 </head>
@@ -77,11 +53,6 @@ button {
 </div>
 
 <h2 style="text-align:center;">Voices Being Heard</h2>
-
-<p style="text-align:center; opacity:0.7; margin-bottom:30px;">
-Silence carries weight. What is shared here resists that silence.  
-Visibility is not passive — it reshapes what is allowed to exist.
-</p>
 
 <div id="posts"></div>
 
@@ -99,19 +70,20 @@ async function loadPosts() {
 
   const { data: posts, error } = await supabase
     .from('submissions')
-    .select('*');
+    .select('*')
+    .eq('status', 'approved');
 
   const container = document.getElementById('posts');
   container.innerHTML = "";
 
   if (error) {
     console.log(error);
-    container.innerHTML = "<p style='text-align:center;'>Error loading posts</p>";
+    container.innerHTML = "<p>Error loading posts</p>";
     return;
   }
 
   if (!posts || posts.length === 0) {
-    container.innerHTML = "<p style='text-align:center;'>No posts yet.</p>";
+    container.innerHTML = "<p>No approved posts yet.</p>";
     return;
   }
 
@@ -132,5 +104,6 @@ async function loadPosts() {
 
 loadPosts();
 </script>
+
 </body>
 </html>
