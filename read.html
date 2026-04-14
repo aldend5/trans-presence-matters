@@ -8,7 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-/* Base body and typography */
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
@@ -19,7 +18,6 @@ body {
   color: #1a1a1a;
 }
 
-/* Animated bubbles background */
 body::before {
   content: '';
   position: absolute;
@@ -38,7 +36,6 @@ body::before {
   100% { transform: translate(0,50px) rotate(360deg); }
 }
 
-/* Container */
 .container {
   max-width: 720px;
   margin: auto;
@@ -47,94 +44,50 @@ body::before {
   z-index: 1;
 }
 
-/* Navigation */
 .nav {
   display: flex;
   gap: 20px;
   margin-bottom: 40px;
   justify-content: center;
   flex-wrap: wrap;
-  font-size: 0.95rem;
 }
 
 .nav a {
   text-decoration: none;
   opacity: 0.7;
   color: #1a1a1a;
-  transition: opacity 0.3s, transform 0.3s;
 }
 
 .nav a:hover {
   opacity: 1;
-  transform: scale(1.05);
 }
 
-/* Headings */
 h2 {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   font-weight: 500;
-  font-size: 1.8rem;
 }
 
-/* Post cards */
+.subtext {
+  text-align: center;
+  opacity: 0.7;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
 .card {
   background: rgba(255,255,255,0.75);
   backdrop-filter: blur(16px);
   border-radius: 25px;
-  padding: 30px 25px;
-  margin-bottom: 25px;
+  padding: 25px;
+  margin-bottom: 20px;
   box-shadow: 0 12px 28px rgba(0,0,0,0.08);
 }
 
-/* Post content */
-.card div, .card p {
-  margin-bottom: 15px;
-  line-height: 1.6;
-  color: #333;
-}
-
-/* Author/anonymous */
-.card .author {
+.author {
   opacity: 0.6;
   font-size: 0.9rem;
-}
-
-/* Like button */
-.card button {
-  margin-left: 10px;
-  padding: 5px 10px;
-  font-size: 0.85rem;
-  cursor: pointer;
-  border: none;
-  border-radius: 8px;
-  background: #d46a9e;
-  color: white;
-  transition: transform 0.2s;
-}
-
-.card button:hover {
-  transform: scale(1.05);
-}
-
-/* Comment input */
-.card input {
-  width: 100%;
   margin-top: 10px;
-  padding: 10px;
-  border-radius: 12px;
-  border: 1px solid #ccc;
-  font-size: 0.95rem;
-}
-
-/* Responsive adjustments */
-@media(max-width: 480px){
-  .card {
-    padding: 20px 15px;
-  }
-  h2 {
-    font-size: 1.5rem;
-  }
 }
 </style>
 </head>
@@ -150,8 +103,11 @@ h2 {
   </div>
 
   <h2>Voices Being Heard</h2>
-  <p style="text-align:center; opacity:0.7; margin-bottom:30px;">
-    Every shared experience matters. Silence has consequences; every story adds weight to understanding. Visibility fosters connection and opens pathways for allies.
+
+  <p class="subtext">
+    Some voices arrive quietly. Some never get spoken at all.  
+    What is shared here holds weight — and what is not shared does too.  
+    Presence grows when it is witnessed.
   </p>
 
   <div id="posts"></div>
@@ -159,76 +115,47 @@ h2 {
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-/* 🔴 ADD YOUR SUPABASE DETAILS HERE */
 const supabaseUrl = "https://hpafnpfhlbgcreotgbzn.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwYWZucGZobGJnY3Jlb3RnYnpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NDA4ODMsImV4cCI6MjA5MDUxNjg4M30.Djb1u8uujkFSRlXA7IfUBbDnMvLMCFx083dQRqKGmsE";
-/* 🔴 END */
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwYWZucGZobGJnY3Jlb3RnYnpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NDA4ODMsImV4cCI6MjA5MDUxNjg4M30.Djb1u8uujkFSRlXA7IfUBbDnMvLMCFx083dQRqKGmsE"; // 🔴 
 
 const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 async function loadPosts() {
-  const { data: posts } = await supabase
+  const { data: posts, error } = await supabase
     .from('submissions')
     .select('*')
-    .eq('status','approved');
+    .eq('status', 'approved');
+
+  console.log("POSTS:", posts, error);
 
   const container = document.getElementById('posts');
   container.innerHTML = "";
 
-  for (let post of posts) {
-    const { data: likes } = await supabase
-      .from('likes')
-      .select('*')
-      .eq('submission_id', post.id);
+  if (error) {
+    container.innerHTML = "<p style='text-align:center;'>Something broke. Check console.</p>";
+    return;
+  }
 
-    const { data: comments } = await supabase
-      .from('comments')
-      .select('*')
-      .eq('submission_id', post.id)
-      .eq('status','approved');
+  if (!posts || posts.length === 0) {
+    container.innerHTML = "<p style='text-align:center;'>Nothing visible yet.</p>";
+    return;
+  }
 
+  posts.reverse().forEach(post => {
     const el = document.createElement('div');
     el.className = "card";
 
     el.innerHTML = `
       <div>${post.content}</div>
-      <div class="author">${post.anonymous ? "Anonymous" : (post.name || "")}</div>
-
-      <div>❤️ ${likes.length} 
-        <button onclick="likePost('${post.id}')">Like</button>
+      <div class="author">
+        ${post.anonymous ? "Anonymous" : (post.name || "")}
       </div>
-
-      <div>
-        ${comments.map(c => `<p>${c.content}</p>`).join("")}
-      </div>
-
-      <form onsubmit="addComment(event,'${post.id}')">
-        <input placeholder="Respond thoughtfully..." required>
-      </form>
     `;
 
     container.appendChild(el);
-  }
-}
-
-async function likePost(id) {
-  await supabase.from('likes').insert([{ submission_id: id }]);
-  loadPosts();
-}
-
-async function addComment(e,id) {
-  e.preventDefault();
-  const content = e.target[0].value;
-
-  await supabase.from('comments').insert([{
-    submission_id: id,
-    content,
-    anonymous: true,
-    status: "pending"
-  }]);
-
-  e.target.reset();
+  });
 }
 
 loadPosts();
