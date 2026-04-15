@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Comment - Trans Presence Matters</title>
+<title>Trans Presence Matters</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
@@ -27,32 +27,42 @@ body {
   margin-bottom: 40px;
 }
 
-.nav a {
-  text-decoration: none;
-  color: #1a1a1a;
-  opacity: 0.7;
-}
-
 .card {
   background: rgba(255,255,255,0.85);
   border-radius: 20px;
   padding: 25px;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
-.reactions {
-  margin-top: 15px;
-  display: flex;
-  gap: 15px;
+.author {
+  opacity: 0.6;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+.comment {
+  margin-top: 10px;
+  padding: 10px;
+  background: rgba(0,0,0,0.03);
+  border-radius: 10px;
+}
+
+textarea {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
 }
 
 button {
-  border: none;
-  border-radius: 10px;
+  margin-top: 8px;
   padding: 6px 12px;
-  cursor: pointer;
+  border-radius: 10px;
+  border: none;
   background: #d46a9e;
   color: white;
+  cursor: pointer;
 }
 </style>
 </head>
@@ -61,21 +71,15 @@ button {
 
 <div class="container">
 
-  <div class="nav">
-    <a href="index.html">Home</a>
-    <a href="read.html">Read</a>
-    <a href="submit.html">Share</a>
-    <a href="comment.html">Comment</a>
-  </div>
+<div class="nav">
+<a href="index.html">Home</a>
+<a href="read.html">Read</a>
+<a href="submit.html">Share</a>
+</div>
 
-  <h2 style="text-align:center;">Responses & Reflections</h2>
+<h2 style="text-align:center;">Stories & Responses</h2>
 
-  <p style="text-align:center; opacity:0.7;">
-    Not every voice arrives first. Some arrive in response.  
-    Engagement shapes presence. Silence does too.
-  </p>
-
-  <div id="comments"></div>
+<div id="posts"></div>
 
 </div>
 
@@ -87,74 +91,88 @@ const supabase = window.supabase.createClient(
   "YOUR_ANON_KEY"
 );
 
-async function loadComments() {
+async function loadPosts() {
 
-  const { data: comments, error } = await supabase
-    .from('comments')
+  const { data: posts, error } = await supabase
+    .from('submissions')
     .select('*')
     .eq('status', 'approved');
 
-  const container = document.getElementById('comments');
+  const container = document.getElementById('posts');
   container.innerHTML = "";
 
   if (error) {
     console.log(error);
-    container.innerHTML = "<p>Error loading comments</p>";
+    container.innerHTML = "<p>Error loading posts</p>";
     return;
   }
 
-  if (!comments || comments.length === 0) {
-    container.innerHTML = "<p>No responses yet.</p>";
-    return;
-  }
+  for (let post of posts.reverse()) {
 
-  for (let comment of comments) {
-
-    const { data: reactions } = await supabase
-      .from('comment_reactions')
+    // likes
+    const { data: likes } = await supabase
+      .from('submission_likes')
       .select('*')
-      .eq('comment_id', comment.id);
+      .eq('submission_id', post.id);
 
-    const likes = reactions ? reactions.filter(r => r.type === 'like').length : 0;
-    const dislikes = reactions ? reactions.filter(r => r.type === 'dislike').length : 0;
+    // comments
+    const { data: comments } = await supabase
+      .from('comments')
+      .select('*')
+      .eq('submission_id', post.id)
+      .eq('status', 'approved');
 
     const el = document.createElement('div');
     el.className = "card";
 
     el.innerHTML = `
-      <div>${comment.content}</div>
+      <div>${post.content}</div>
 
-      <div class="reactions">
-        👍 ${likes}
-        <button onclick="react('${comment.id}', 'like')">Like</button>
-
-        👎 ${dislikes}
-        <button onclick="react('${comment.id}', 'dislike')">Dislike</button>
+      <div class="author">
+        ${post.anonymous ? "Anonymous" : (post.name || "")}
       </div>
+
+      <div>
+        ❤️ ${likes ? likes.length : 0}
+        <button onclick="likePost('${post.id}')">Like</button>
+      </div>
+
+      <div>
+        ${(comments || []).map(c => `
+          <div class="comment">${c.content}</div>
+        `).join("")}
+      </div>
+
+      <form onsubmit="addComment(event, '${post.id}')">
+        <textarea placeholder="Respond..." required></textarea>
+        <button type="submit">Reply</button>
+      </form>
     `;
 
     container.appendChild(el);
   }
 }
 
-async function react(commentId, type) {
-  const { error } = await supabase
-    .from('comment_reactions')
-    .insert([{
-      comment_id: commentId,
-      type: type
-    }]);
-
-  if (error) {
-    console.log(error);
-    alert("Something went wrong");
-    return;
-  }
-
-  loadComments();
+async function likePost(id) {
+  await supabase.from('submission_likes').insert([{ submission_id: id }]);
+  loadPosts();
 }
 
-loadComments();
+async function addComment(e, postId) {
+  e.preventDefault();
+
+  const content = e.target.querySelector('textarea').value;
+
+  await supabase.from('comments').insert([{
+    submission_id: postId,
+    content: content,
+    status: "pending"
+  }]);
+
+  e.target.reset();
+}
+
+loadPosts();
 </script>
 
 </body>
