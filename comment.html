@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comment - Trans Presence Matters</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(180deg, #fdfbff, #f7c6d9, #a8d8f0);
+}
+
+.container {
+  max-width: 720px;
+  margin: auto;
+  padding: 60px 20px;
+}
+
+.nav {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #1a1a1a;
+  opacity: 0.7;
+}
+
+.card {
+  background: rgba(255,255,255,0.85);
+  border-radius: 20px;
+  padding: 25px;
+  margin-bottom: 20px;
+}
+
+.reactions {
+  margin-top: 15px;
+  display: flex;
+  gap: 15px;
+}
+
+button {
+  border: none;
+  border-radius: 10px;
+  padding: 6px 12px;
+  cursor: pointer;
+  background: #d46a9e;
+  color: white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="nav">
+    <a href="index.html">Home</a>
+    <a href="read.html">Read</a>
+    <a href="submit.html">Share</a>
+    <a href="comment.html">Comment</a>
+  </div>
+
+  <h2 style="text-align:center;">Responses & Reflections</h2>
+
+  <p style="text-align:center; opacity:0.7;">
+    Not every voice arrives first. Some arrive in response.  
+    Engagement shapes presence. Silence does too.
+  </p>
+
+  <div id="comments"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const supabase = window.supabase.createClient(
+  "https://hpafnpfhlbgcreotgbzn.supabase.co",
+  "YOUR_ANON_KEY"
+);
+
+async function loadComments() {
+
+  const { data: comments, error } = await supabase
+    .from('comments')
+    .select('*')
+    .eq('status', 'approved');
+
+  const container = document.getElementById('comments');
+  container.innerHTML = "";
+
+  if (error) {
+    console.log(error);
+    container.innerHTML = "<p>Error loading comments</p>";
+    return;
+  }
+
+  if (!comments || comments.length === 0) {
+    container.innerHTML = "<p>No responses yet.</p>";
+    return;
+  }
+
+  for (let comment of comments) {
+
+    const { data: reactions } = await supabase
+      .from('comment_reactions')
+      .select('*')
+      .eq('comment_id', comment.id);
+
+    const likes = reactions ? reactions.filter(r => r.type === 'like').length : 0;
+    const dislikes = reactions ? reactions.filter(r => r.type === 'dislike').length : 0;
+
+    const el = document.createElement('div');
+    el.className = "card";
+
+    el.innerHTML = `
+      <div>${comment.content}</div>
+
+      <div class="reactions">
+        👍 ${likes}
+        <button onclick="react('${comment.id}', 'like')">Like</button>
+
+        👎 ${dislikes}
+        <button onclick="react('${comment.id}', 'dislike')">Dislike</button>
+      </div>
+    `;
+
+    container.appendChild(el);
+  }
+}
+
+async function react(commentId, type) {
+  const { error } = await supabase
+    .from('comment_reactions')
+    .insert([{
+      comment_id: commentId,
+      type: type
+    }]);
+
+  if (error) {
+    console.log(error);
+    alert("Something went wrong");
+    return;
+  }
+
+  loadComments();
+}
+
+loadComments();
+</script>
+
+</body>
+</html>
