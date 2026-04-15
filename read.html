@@ -105,36 +105,33 @@ const supabase = window.supabase.createClient(
 
 async function loadPosts() {
 
-  console.log("Fetching posts...");
-
-  const { data, error } = await supabase
-    .from('submissions')
-    .select('*')
-    .eq('status', 'approved');
-
-  console.log("DATA:", data);
-  console.log("ERROR:", error);
-
   const container = document.getElementById('posts');
 
-  if (error) {
-    container.innerHTML = "<p style='text-align:center;'>Error loading posts</p>";
-    return;
-  }
+  try {
+    const response = await supabase
+      .from('submissions')
+      .select('*');
 
-  if (!data || data.length === 0) {
-    container.innerHTML = "<p style='text-align:center;'>No approved posts yet</p>";
-    return;
-  }
+    console.log("FULL RESPONSE:", response);
 
-  container.innerHTML = data.reverse().map(post => `
-    <div class="card">
-      <div>${post.content}</div>
-      <div class="author">
-        ${post.anonymous ? "Anonymous" : (post.name || "")}
-      </div>
-    </div>
-  `).join('');
+    if (response.error) {
+      container.innerHTML = "❌ Error: " + response.error.message;
+      return;
+    }
+
+    if (!response.data || response.data.length === 0) {
+      container.innerHTML = "⚠️ No data found";
+      return;
+    }
+
+    container.innerHTML = response.data.map(p => `
+      <div class="card">${p.content}</div>
+    `).join('');
+
+  } catch (err) {
+    console.log("CRASH:", err);
+    container.innerHTML = "💥 Crash: " + err.message;
+  }
 }
 
 loadPosts();
