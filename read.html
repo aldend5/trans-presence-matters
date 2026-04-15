@@ -27,8 +27,14 @@ body {
   margin-bottom: 40px;
 }
 
+.nav a {
+  text-decoration: none;
+  color: #1a1a1a;
+  opacity: 0.7;
+}
+
 .card {
-  background: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.85);
   border-radius: 20px;
   padding: 25px;
   margin-bottom: 20px;
@@ -43,32 +49,33 @@ body {
 </head>
 
 <body>
+
 <div class="container">
 
-<div class="nav">
-<a href="index.html">Home</a>
-<a href="read.html">Read</a>
-<a href="submit.html">Share</a>
-<a href="comment.html">Comment</a>
-</div>
+  <div class="nav">
+    <a href="index.html">Home</a>
+    <a href="read.html">Read</a>
+    <a href="submit.html">Share</a>
+    <a href="comment.html">Comment</a>
+  </div>
 
-<h2 style="text-align:center;">Voices Being Heard</h2>
+  <h2 style="text-align:center;">Voices Being Heard</h2>
 
-<div id="posts"></div>
+  <div id="posts"></div>
 
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-const supabaseUrl = "https://hpafnpfhlbgcreotgbzn.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwYWZucGZobGJnY3Jlb3RnYnpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NDA4ODMsImV4cCI6MjA5MDUxNjg4M30.Djb1u8uujkFSRlXA7IfUBbDnMvLMCFx083dQRqKGmsE";
-
-const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+const supabase = window.supabase.createClient(
+  "https://hpafnpfhlbgcreotgbzn.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwYWZucGZobGJnY3Jlb3RnYnpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NDA4ODMsImV4cCI6MjA5MDUxNjg4M30.Djb1u8uujkFSRlXA7IfUBbDnMvLMCFx083dQRqKGmsE"
+);
 
 async function loadPosts() {
 
-  const { data: posts, error } = await supabase
+  const { data, error } = await supabase
     .from('submissions')
     .select('*')
     .eq('status', 'approved');
@@ -77,17 +84,17 @@ async function loadPosts() {
   container.innerHTML = "";
 
   if (error) {
-    console.log(error);
-    container.innerHTML = "<p>Error loading posts</p>";
+    console.log("ERROR:", error);
+    container.innerHTML = "<p style='text-align:center;'>Error loading posts</p>";
     return;
   }
 
-  if (!posts || posts.length === 0) {
-    container.innerHTML = "<p>No approved posts yet.</p>";
+  if (!data || data.length === 0) {
+    container.innerHTML = "<p style='text-align:center;'>No approved posts yet.</p>";
     return;
   }
 
-  posts.reverse().forEach(post => {
+  data.reverse().forEach(post => {
     const el = document.createElement('div');
     el.className = "card";
 
