@@ -3,105 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Read - Trans Presence Matters</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-
-<style>
-  <script>
-document.body.innerHTML += "<h3 style='text-align:center;'>JS IS DEFINITELY RUNNING</h3>";
-</script>
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background: linear-gradient(180deg, #fdfbff, #f7c6d9, #a8d8f0);
-  color: #1a1a1a;
-}
-
-.container {
-  max-width: 720px;
-  margin: auto;
-  padding: 60px 20px;
-}
-
-.nav {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-bottom: 40px;
-  flex-wrap: wrap;
-}
-
-.nav a {
-  text-decoration: none;
-  color: #1a1a1a;
-  opacity: 0.7;
-}
-
-.nav a:hover {
-  opacity: 1;
-}
-
-h2 {
-  text-align: center;
-  margin-bottom: 10px;
-  font-weight: 500;
-}
-
-.subtext {
-  text-align: center;
-  opacity: 0.7;
-  margin-bottom: 30px;
-}
-
-.card {
-  background: rgba(255,255,255,0.85);
-  border-radius: 20px;
-  padding: 20px;
-  margin-bottom: 20px;
-}
-
-.author {
-  opacity: 0.6;
-  font-size: 0.9rem;
-  margin-top: 10px;
-}
-</style>
+<title>Read</title>
 </head>
 
-<body>
+<body style="font-family: sans-serif; padding:20px;">
 
-<div class="container">
+<h2>Read Page</h2>
 
-  <!-- NAV -->
-  <div class="nav">
-    <a href="index.html">Home</a>
-    <a href="read.html">Read</a>
-    <a href="submit.html">Share</a>
-    <a href="comment.html">Respond</a>
-    <a href="about.html">About</a>
-  </div>
+<div id="posts">Loading...</div>
 
-  <h2>Voices Being Heard</h2>
-
-  <p class="subtext">
-    Some voices arrive quietly. Some never get spoken at all.  
-    What is shared here holds weight.
-  </p>
-
-  <div id="posts">
-    <p style="text-align:center;">Loading posts...</p>
-  </div>
-
-</div>
-
-<!-- SUPABASE -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 
 <script>
-console.log("JS START");
-console.log("SUPABASE OBJECT:", window.supabase);
-  console.log("READ PAGE LOADED");
+console.log("SCRIPT START");
 
 const supabase = window.supabase.createClient(
   "https://hpafnpfhlbgcreotgbzn.supabase.co",
@@ -113,29 +27,34 @@ async function loadPosts() {
   const container = document.getElementById('posts');
 
   try {
-    const response = await supabase
+    console.log("Fetching...");
+
+    const { data, error } = await supabase
       .from('submissions')
-      .select('*');
+      .select('*'); // 🔥 NO FILTER FOR NOW
 
-    console.log("FULL RESPONSE:", response);
+    console.log("DATA:", data);
+    console.log("ERROR:", error);
 
-    if (response.error) {
-      container.innerHTML = "❌ Error: " + response.error.message;
+    if (error) {
+      container.innerHTML = "ERROR: " + error.message;
       return;
     }
 
-    if (!response.data || response.data.length === 0) {
-      container.innerHTML = "⚠️ No data found";
+    if (!data || data.length === 0) {
+      container.innerHTML = "No data in table";
       return;
     }
 
-    container.innerHTML = response.data.map(p => `
-      <div class="card">${p.content}</div>
+    container.innerHTML = data.map(p => `
+      <div style="border:1px solid black; margin:10px; padding:10px;">
+        ${p.content || "No content"}
+      </div>
     `).join('');
 
   } catch (err) {
     console.log("CRASH:", err);
-    container.innerHTML = "💥 Crash: " + err.message;
+    container.innerHTML = "CRASH: " + err.message;
   }
 }
 
