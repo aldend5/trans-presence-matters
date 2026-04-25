@@ -15,47 +15,43 @@
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 
 <script>
-console.log("SCRIPT START");
+document.getElementById('posts').innerHTML = "JS started";
+
+console.log("STEP 1: script loaded");
 
 const supabase = window.supabase.createClient(
   "https://hpafnpfhlbgcreotgbzn.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwYWZucGZobGJnY3Jlb3RnYnpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NDA4ODMsImV4cCI6MjA5MDUxNjg4M30.Djb1u8uujkFSRlXA7IfUBbDnMvLMCFx083dQRqKGmsE"
 );
 
-async function loadPosts() {
+console.log("STEP 2: supabase created");
 
+async function loadPosts() {
   const container = document.getElementById('posts');
 
-  try {
-    console.log("Fetching...");
+  container.innerHTML = "Fetching from DB...";
 
-    const { data, error } = await supabase
-      .from('submissions')
-      .select('*'); // 🔥 NO FILTER FOR NOW
+  console.log("STEP 3: inside function");
 
-    console.log("DATA:", data);
-    console.log("ERROR:", error);
+  const result = await supabase.from('submissions').select('*');
 
-    if (error) {
-      container.innerHTML = "ERROR: " + error.message;
-      return;
-    }
+  console.log("STEP 4: got response", result);
 
-    if (!data || data.length === 0) {
-      container.innerHTML = "No data in table";
-      return;
-    }
-
-    container.innerHTML = data.map(p => `
-      <div style="border:1px solid black; margin:10px; padding:10px;">
-        ${p.content || "No content"}
-      </div>
-    `).join('');
-
-  } catch (err) {
-    console.log("CRASH:", err);
-    container.innerHTML = "CRASH: " + err.message;
+  if (result.error) {
+    container.innerHTML = "ERROR: " + result.error.message;
+    return;
   }
+
+  if (!result.data || result.data.length === 0) {
+    container.innerHTML = "No data found";
+    return;
+  }
+
+  container.innerHTML = result.data.map(p => `
+    <div style="border:1px solid black;margin:10px;padding:10px;">
+      ${p.content}
+    </div>
+  `).join('');
 }
 
 loadPosts();
